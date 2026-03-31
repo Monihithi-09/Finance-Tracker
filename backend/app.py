@@ -25,7 +25,7 @@ def login():
         if email in users and users[email] == password:
             return "Login Success ✅"
         else:
-            return "Invalid ❌"
+            return "Invalid Credentials ❌"
     return render_template('login.html')
 
 if __name__ == '__main__':
