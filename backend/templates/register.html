@@ -40,7 +40,9 @@
 
         <form method="POST">
 
-            <input type="email" name="email" class="form-control mt-3" placeholder="Enter Email" required>
+            <input type="email" id="email" name="email" class="form-control mt-3"
+               placeholder="Enter Email" onkeyup="checkEmail()" required>
+            <p id="emailMsg" style="font-size:12px;"></p>
 
             <!-- Password -->
             <div class="password-container mt-3">
@@ -75,6 +77,30 @@
 function togglePassword() {
     let pass = document.getElementById("password");
     pass.type = pass.type === "password" ? "text" : "password";
+}
+</script>
+<script>
+function checkEmail() {
+    let email = document.getElementById("email").value;
+
+    fetch('/check_email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'email=' + email
+    })
+    .then(response => response.text())
+    .then(data => {
+        let msg = document.getElementById("emailMsg");
+
+        if (data === "exists") {
+            msg.innerHTML = "You already have an account ❌";
+            msg.style.color = "red";
+        }else {
+            msg.innerHTML = "";   // ✅ SHOW NOTHING
+        }
+    });
 }
 </script>
 
